@@ -21,6 +21,15 @@ export class ProjectsResolver {
     return this.projectsService.all(dto)
   }
 
+  @Query(() => Project, {
+    description :`Retourne un projet par son identifiant`
+  })
+  async project (
+    @Args('id') id: string
+  ) {
+    return this.projectsService.findById(id)
+  }
+
   @Mutation(() => Project, {
     description :`Permet de créer un nouveau projet`
   })

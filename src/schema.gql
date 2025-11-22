@@ -80,6 +80,9 @@ type Query {
 
   """Retourne la liste des utilisateurs"""
   allUsers: [User!]!
+
+  """Retourne un projet par son identifiant"""
+  project(id: String!): Project!
 }
 
 type Task {

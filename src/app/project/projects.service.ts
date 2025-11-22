@@ -6,6 +6,15 @@ import { Project } from '../../database/entities'
 @Injectable()
 export class ProjectsService {
 
+  async findById (id: string) {
+    return Project.findOne({
+      where: { id },
+      relations: {
+        user: true
+      }
+    })
+  }
+
   async all (dto: ProjectFiltersInput) {
     const where: any = {}
 
