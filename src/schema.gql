@@ -90,6 +90,7 @@ type Task {
   deletedAt: DateTime
   description: String
   id: ID!
+  isArchived: Boolean!
   project: Project!
   status: TaskStatus!
   title: String!

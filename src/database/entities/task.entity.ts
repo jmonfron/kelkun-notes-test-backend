@@ -35,6 +35,13 @@ export class Task extends Tracking {
   })
   status: TaskStatus
 
+  @Field(() => Boolean)
+  @Column({
+    name: 'isArchived',
+    default: false
+  })
+  isArchived: boolean
+
   @Field(() => Project )
   @ManyToOne(() => Project, (p) => p.tasks, {
     cascade: true
