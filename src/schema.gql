@@ -10,6 +10,17 @@ input CreateProjectInput {
   userId: String
 }
 
+input CreateTaskInput {
+  """Description de la tache"""
+  description: String
+
+  """Identifiant du projet auquel la tache appartient"""
+  projectId: String!
+
+  """Nom de la tache"""
+  title: String!
+}
+
 input CreateUserInput {
   """Email de l'utilisateur"""
   email: String!
@@ -27,8 +38,14 @@ type Mutation {
   """Permet de créer un nouveau projet"""
   createProject(dto: CreateProjectInput!): Project!
 
+  """Permet de créer une nouvelle tâche"""
+  createTask(dto: CreateTaskInput!): Task!
+
   """Permet de créer un nouvel utilisateur"""
   createUser(dto: CreateUserInput!): User!
+
+  """Permet de mettre à jour une tâche"""
+  updateTask(dto: UpdateTaskInput!): Task!
 }
 
 type Project {
@@ -55,6 +72,9 @@ type Query {
   """Retourne la liste des projets, filtrables par utilisateur"""
   allProjects(dto: ProjectFiltersInput!): [Project!]!
 
+  """Retourne la liste des tâches"""
+  allTasks(dto: TaskFiltersInput!): [Task!]!
+
   """Retourne la liste des utilisateurs"""
   allUsers: [User!]!
 }
@@ -75,10 +95,29 @@ type Task {
   updatedAt: DateTime!
 }
 
+input TaskFiltersInput {
+  """Identifiant du projet"""
+  projectId: String
+}
+
 enum TaskStatus {
   DONE
   IN_PROGRESS
   TODO
+}
+
+input UpdateTaskInput {
+  """Description de la tache"""
+  description: String
+
+  """Identifiant de la tache"""
+  id: String!
+
+  """Statut de la tache"""
+  status: TaskStatus
+
+  """Titre de la tache"""
+  title: String
 }
 
 type User {
