@@ -39,6 +39,7 @@ type Project {
   deletedAt: DateTime
   id: ID!
   name: String!
+  tasks: [Task!]
 
   """Date de dernière mise à jour (UTC)"""
   updatedAt: DateTime!
@@ -56,6 +57,28 @@ type Query {
 
   """Retourne la liste des utilisateurs"""
   allUsers: [User!]!
+}
+
+type Task {
+  """Date de création (UTC, immuable)"""
+  createdAt: DateTime!
+
+  """Date de suppression (UTC)"""
+  deletedAt: DateTime
+  description: String
+  id: ID!
+  project: Project!
+  status: TaskStatus!
+  title: String!
+
+  """Date de dernière mise à jour (UTC)"""
+  updatedAt: DateTime!
+}
+
+enum TaskStatus {
+  DONE
+  IN_PROGRESS
+  TODO
 }
 
 type User {
