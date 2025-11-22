@@ -7,6 +7,7 @@ import { dataSourceOptionsFactory } from './database/datasource'
 import { UsersModule } from './app/users/users.module'
 import { ProjectsModule } from './app/project/projects.module'
 import { TaskModule } from './app/task/task.module'
+import { ScheduleModule } from '@nestjs/schedule'
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { TaskModule } from './app/task/task.module'
       playground: true // disabled in production
     }),
     TypeOrmModule.forRootAsync(dataSourceOptionsFactory()),
+    ScheduleModule.forRoot(),
     UsersModule,
     ProjectsModule,
     TaskModule

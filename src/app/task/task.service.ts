@@ -4,6 +4,8 @@ import { Task } from 'src/database/entities'
 import { UpdateTaskInput } from '../project/dto/input/task/update-task.input'
 import { TaskFiltersInput } from '../project/dto/input/task/task-filters.input'
 import { isUndefined, omitBy } from 'lodash'
+import { Cron } from '@nestjs/schedule'
+import dayjs from 'dayjs'
 
 @Injectable()
 export class TaskService {
@@ -67,5 +69,16 @@ export class TaskService {
     await task.remove()
 
     return true
+  }
+
+  @Cron('*/1 * * * *') // toutes les miuntes
+  async archiveTasks () {
+    const limit = dayjs().subtract(15, 'minutes').toDate()
+    await Task.createQueryBuilder()
+      .update(Task)
+      .set({ isArchived: true })
+      .where('isArchived = :isArchived', { isArchived: false })
+      .andWhere('created_at < :limit', { limit })
+      .execute()
   }
 }
