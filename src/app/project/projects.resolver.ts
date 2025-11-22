@@ -32,7 +32,7 @@ export class ProjectsResolver {
 
 
   @ResolveField(() => [Task], { nullable: true })
-  async tasks (@Parent() project: Project) {
-    return this.taskService.all({ projectId: project.id })
+  async tasks (@Parent() project: Project, @Args('archived', { type: () => Boolean, nullable: true }) archived?: boolean) {
+    return this.taskService.all({ projectId: project.id, archived })
   }
 }

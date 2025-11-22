@@ -15,6 +15,10 @@ export class TaskService {
       where.project = { id: dto.projectId }
     }
 
+    if (dto.archived !== undefined) {
+      where.isArchived = dto.archived
+    }
+
     return Task.find({
       where,
       order: {
