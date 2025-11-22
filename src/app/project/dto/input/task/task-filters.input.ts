@@ -1,6 +1,7 @@
 import { Field, InputType } from '@nestjs/graphql'
-import { IsOptional, IsUUID } from 'class-validator'
+import { IsEnum, IsOptional, IsUUID } from 'class-validator'
 import { Project } from 'src/database/entities'
+import { TaskStatus } from 'src/types/task.types'
 import { EntityExist } from 'src/utils/decorators/entity-exist.validator'
 
 @InputType()
@@ -21,4 +22,12 @@ export class TaskFiltersInput {
   })
   @IsOptional()
   archived?: boolean
+
+  @Field(() => TaskStatus, {
+    description: `Filtrer par statut de la tâche`,
+    nullable: true
+  })
+  @IsEnum(TaskStatus, { message: `Le statut de la tâche est invalide` })
+  @IsOptional()
+  status?: TaskStatus
 }

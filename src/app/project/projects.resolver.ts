@@ -4,6 +4,7 @@ import { CreateProjectInput } from './dto'
 import { ProjectFiltersInput } from './dto/input/project-filters.input'
 import { Project, Task } from '../../database/entities'
 import { TaskService } from '../task/task.service'
+import { TaskStatus } from 'src/types/task.types'
 
 @Resolver(() => Project)
 export class ProjectsResolver {
@@ -41,7 +42,10 @@ export class ProjectsResolver {
 
 
   @ResolveField(() => [Task], { nullable: true })
-  async tasks (@Parent() project: Project, @Args('archived', { type: () => Boolean, nullable: true }) archived?: boolean) {
-    return this.taskService.all({ projectId: project.id, archived })
+  async tasks (
+    @Parent() project: Project,
+    @Args('archived', { type: () => Boolean, nullable: true }) archived?: boolean,
+    @Args('status', { type: () => TaskStatus, nullable: true }) status?: TaskStatus) {
+    return this.taskService.all({ projectId: project.id, archived, status })
   }
 }

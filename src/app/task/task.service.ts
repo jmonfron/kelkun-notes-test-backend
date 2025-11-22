@@ -19,6 +19,10 @@ export class TaskService {
       where.isArchived = dto.archived
     }
 
+    if (dto.status) {
+      where.status = dto.status
+    }
+
     return Task.find({
       where,
       order: {
