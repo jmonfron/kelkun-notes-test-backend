@@ -30,4 +30,11 @@ export class TaskResolver {
     return this.taskService.updateTask(dto)
   }
 
+  @Mutation(() => Boolean, {
+    description: `Permet de supprimer une tâche`
+  })
+  async deleteTask (@Args('id') id: string) {
+    return this.taskService.deleteTask(id)
+  }
+
 }

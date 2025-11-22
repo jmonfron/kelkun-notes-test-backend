@@ -44,6 +44,9 @@ type Mutation {
   """Permet de créer un nouvel utilisateur"""
   createUser(dto: CreateUserInput!): User!
 
+  """Permet de supprimer une tâche"""
+  deleteTask(id: String!): Boolean!
+
   """Permet de mettre à jour une tâche"""
   updateTask(dto: UpdateTaskInput!): Task!
 }

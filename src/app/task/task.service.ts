@@ -54,4 +54,18 @@ export class TaskService {
 
     return task
   }
+
+  async deleteTask (id: string) {
+    const task = await Task.findOne({
+      where: { id }
+    })
+
+    if (!task) {
+      throw new NotFoundException('Tache non trouvée')
+    }
+
+    await task.remove()
+
+    return true
+  }
 }
