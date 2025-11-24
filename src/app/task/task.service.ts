@@ -1,15 +1,13 @@
 import { Injectable, NotFoundException } from '@nestjs/common'
-import { CreateTaskInput } from 'src/app/project/dto/input/task/create-task.input'
 import { Task } from 'src/database/entities'
-import { UpdateTaskInput } from '../project/dto/input/task/update-task.input'
-import { TaskFiltersInput } from '../project/dto/input/task/task-filters.input'
+import { CreateTaskInput, TaskFiltersInput, UpdateTaskInput } from './dto'
 import { isUndefined, omitBy } from 'lodash'
 import { Cron } from '@nestjs/schedule'
 import dayjs from 'dayjs'
 
 @Injectable()
-export class TaskService {
-  async all (dto: TaskFiltersInput) {
+export class TasksService {
+  async all (dto: TaskFiltersInput): Promise<Task[]> {
     const where: any = {}
     if (dto.projectId) {
       where.project = { id: dto.projectId }
@@ -34,7 +32,7 @@ export class TaskService {
     })
 
   }
-  async createTask (dto: CreateTaskInput) {
+  async createTask (dto: CreateTaskInput): Promise<Task> {
     return await Task.create({
       ...dto,
       project: {
@@ -43,7 +41,7 @@ export class TaskService {
     }).save()
   }
 
-  async updateTask (dto: UpdateTaskInput) {
+  async updateTask (dto: UpdateTaskInput): Promise<Task> {
     const task = await Task.findOne({
       where: { id: dto.id }
     })
@@ -65,22 +63,8 @@ export class TaskService {
     return task
   }
 
-  async deleteTask (id: string) {
-    const task = await Task.findOne({
-      where: { id }
-    })
-
-    if (!task) {
-      throw new NotFoundException('Tache non trouvée')
-    }
-
-    await task.remove()
-
-    return true
-  }
-
   @Cron('*/1 * * * *') // toutes les miuntes
-  async archiveTasks () {
+  async archiveTasks (): Promise<void> {
     const limit = dayjs().subtract(15, 'minutes').toDate()
     await Task.createQueryBuilder()
       .update(Task)

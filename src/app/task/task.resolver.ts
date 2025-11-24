@@ -1,13 +1,11 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql'
-import { TaskService } from './task.service'
+import { TasksService } from './task.service'
 import { Task } from 'src/database/entities'
-import { CreateTaskInput } from 'src/app/project/dto/input/task/create-task.input'
-import { TaskFiltersInput } from '../project/dto/input/task/task-filters.input'
-import { UpdateTaskInput } from '../project/dto/input/task/update-task.input'
+import { CreateTaskInput, TaskFiltersInput, UpdateTaskInput } from './dto'
 
 @Resolver(() => Task)
-export class TaskResolver {
-  constructor (private readonly taskService: TaskService) {}
+export class TasksResolver {
+  constructor (private readonly taskService: TasksService) {}
 
   @Query(() => [Task], {
     description: `Retourne la liste des tâches`
@@ -29,12 +27,4 @@ export class TaskResolver {
   async updateTask (@Args('dto') dto: UpdateTaskInput) {
     return this.taskService.updateTask(dto)
   }
-
-  @Mutation(() => Boolean, {
-    description: `Permet de supprimer une tâche`
-  })
-  async deleteTask (@Args('id') id: string) {
-    return this.taskService.deleteTask(id)
-  }
-
 }

@@ -13,6 +13,7 @@ export class CreateTaskInput {
   @IsNotEmpty({ message: 'validation.isRequired' })
   title: string
 
+
   @Field({
     description: `Description de la tache`,
     nullable: true

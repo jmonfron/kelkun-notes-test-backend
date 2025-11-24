@@ -1,8 +1,9 @@
 import { Module } from '@nestjs/common'
-import { TaskService } from './task.service'
-import { TaskResolver } from './task.resolver'
+import { TasksService } from './task.service'
+import { TasksResolver } from './task.resolver'
 
 @Module({
-  providers: [TaskResolver, TaskService]
+  providers: [TasksResolver, TasksService],
+  exports: [TasksService]
 })
 export class TaskModule {}

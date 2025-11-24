@@ -3,14 +3,14 @@ import { ProjectsService } from './projects.service'
 import { CreateProjectInput } from './dto'
 import { ProjectFiltersInput } from './dto/input/project-filters.input'
 import { Project, Task } from '../../database/entities'
-import { TaskService } from '../task/task.service'
 import { TaskStatus } from 'src/types/task.types'
+import { TasksService } from '../task/task.service'
 
 @Resolver(() => Project)
 export class ProjectsResolver {
   constructor (
     private readonly projectsService: ProjectsService,
-    private readonly taskService: TaskService
+    private readonly taskService: TasksService
   ) { }
 
   @Query(() => [Project], {
