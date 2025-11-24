@@ -79,7 +79,7 @@ type Query {
   allUsers: [User!]!
 
   """Retourne un projet par son identifiant"""
-  project(id: String!): Project!
+  project(id: String!): Project
 }
 
 type Task {

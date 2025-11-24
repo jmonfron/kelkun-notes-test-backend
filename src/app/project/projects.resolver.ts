@@ -23,7 +23,8 @@ export class ProjectsResolver {
   }
 
   @Query(() => Project, {
-    description :`Retourne un projet par son identifiant`
+    description :`Retourne un projet par son identifiant`,
+    nullable: true
   })
   async project (
     @Args('id') id: string
