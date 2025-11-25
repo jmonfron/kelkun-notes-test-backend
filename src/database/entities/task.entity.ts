@@ -16,10 +16,7 @@ export class Task extends Tracking {
   id: string
 
   @Field(() => String)
-  @Column({
-    name: 'title',
-    nullable: false
-  })
+  @Column({ name: 'title' })
   title: string
 
   @Field(() => String, { nullable: true })
