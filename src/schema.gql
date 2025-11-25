@@ -11,13 +11,13 @@ input CreateProjectInput {
 }
 
 input CreateTaskInput {
-  """Description de la tache"""
+  """Description de la tâche"""
   description: String
 
-  """Identifiant du projet auquel la tache appartient"""
+  """Identifiant du projet auquel la tâche appartient"""
   projectId: String!
 
-  """Nom de la tache"""
+  """Titre de la tâche"""
   title: String!
 }
 

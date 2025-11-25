@@ -7,7 +7,7 @@ import { Project } from 'src/database/entities'
 export class CreateTaskInput {
 
   @Field({
-    description: `Nom de la tache`
+    description: `Titre de la tâche`
   })
   @IsString({ message: 'validation.isString' })
   @IsNotEmpty({ message: 'validation.isRequired' })
@@ -15,7 +15,7 @@ export class CreateTaskInput {
 
 
   @Field({
-    description: `Description de la tache`,
+    description: `Description de la tâche`,
     nullable: true
   })
   @IsOptional()
@@ -24,7 +24,7 @@ export class CreateTaskInput {
 
 
   @Field(() => String, {
-    description: `Identifiant du projet auquel la tache appartient`,
+    description: `Identifiant du projet auquel la tâche appartient`,
     nullable: false
   })
   @IsUUID('4', { message: `L'identifiant du projet doit être un UUID valide.` })
