@@ -2,7 +2,6 @@ import { Injectable, NotFoundException } from '@nestjs/common'
 import { Task } from 'src/database/entities'
 import { CreateTaskInput, TaskFiltersInput, UpdateTaskInput } from './dto'
 import { isUndefined, omitBy } from 'lodash'
-import { Cron } from '@nestjs/schedule'
 import dayjs from 'dayjs'
 
 @Injectable()
@@ -63,9 +62,9 @@ export class TasksService {
     return task
   }
 
-  @Cron('*/1 * * * *') // toutes les miuntes
-  async archiveTasks (): Promise<void> {
+  async archiveOldTasks (): Promise<void> {
     const limit = dayjs().subtract(15, 'minutes').toDate()
+
     await Task.createQueryBuilder()
       .update(Task)
       .set({ isArchived: true })
