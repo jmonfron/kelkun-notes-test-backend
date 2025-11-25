@@ -44,7 +44,7 @@ export class Task extends Tracking {
 
   @Field(() => Project )
   @ManyToOne(() => Project, (p) => p.tasks, {
-    cascade: true
+    onDelete: 'CASCADE'
   })
   @JoinColumn({ name: 'project_id' })
   project: Project
