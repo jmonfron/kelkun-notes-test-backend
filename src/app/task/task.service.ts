@@ -7,17 +7,20 @@ import dayjs from 'dayjs'
 @Injectable()
 export class TasksService {
   async all (dto: TaskFiltersInput): Promise<Task[]> {
+    const { projectId, archived, status } = dto
+
     const where: any = {}
-    if (dto.projectId) {
-      where.project = { id: dto.projectId }
+
+    if (projectId) {
+      where.project = { id: projectId }
     }
 
-    if (dto.archived !== undefined) {
-      where.isArchived = dto.archived
+    if (archived !== undefined) {
+      where.isArchived = archived
     }
 
-    if (dto.status) {
-      where.status = dto.status
+    if (status) {
+      where.status = status
     }
 
     return Task.find({
@@ -46,7 +49,7 @@ export class TasksService {
     })
 
     if (!task) {
-      throw new NotFoundException('Tache non trouvée')
+      throw new NotFoundException('Tâche non trouvée')
     }
 
     const dataToUpdate = omitBy({
@@ -68,7 +71,7 @@ export class TasksService {
     await Task.createQueryBuilder()
       .update(Task)
       .set({ isArchived: true })
-      .where('isArchived = :isArchived', { isArchived: false })
+      .where('is_archived = :isArchived', { isArchived: false })
       .andWhere('created_at < :limit', { limit })
       .execute()
   }
